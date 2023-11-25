@@ -1,3 +1,12 @@
 /datasets/
 /pretrained/
 
+*~
+.ipynb_checkpoints
+.DS_Store
+
+*.pth
+input_frames/*
+
+
+
