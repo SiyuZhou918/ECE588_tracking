@@ -16,7 +16,7 @@ class Evaluator(object):
         self.reset_accumulator()
 
     def load_annotations(self):
-        assert self.data_type == 'mot'
+        assert self.data_type == 'MOT17'
 
         gt_filename = os.path.join(self.data_root, self.seq_name, 'gt', 'gt.txt')
         self.gt_frame_dict = read_results(gt_filename, self.data_type, is_gt=True)
@@ -115,7 +115,7 @@ class Evaluator(object):
 
 
 def read_results(filename, data_type: str, is_gt=False, is_ignore=False):
-    if data_type in ('mot', 'lab'):
+    if data_type in ('MOT17', 'lab'):
         read_fun = read_mot_results
     else:
         raise ValueError('Unknown data type: {}'.format(data_type))

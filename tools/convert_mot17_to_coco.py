@@ -5,7 +5,7 @@ import cv2
 
 
 # Use the same script for MOT16
-DATA_PATH = '../datasets/mot'
+DATA_PATH = '/datasets/MOT17'
 OUT_PATH = os.path.join(DATA_PATH, 'annotations')
 SPLITS = ['train_half', 'val_half', 'train', 'test']  # --> split training data to train_half and val_half.
 HALF_VIDEO = True
@@ -35,7 +35,7 @@ if __name__ == '__main__':
         for seq in sorted(seqs):
             if '.DS_Store' in seq:
                 continue
-            if 'mot' in DATA_PATH and (split != 'test' and not ('FRCNN' in seq)):
+            if 'MOT17' in DATA_PATH and (split != 'test' and not ('FRCNN' in seq)):
                 continue
             video_cnt += 1  # video sequence number.
             out['videos'].append({'id': video_cnt, 'file_name': seq})
