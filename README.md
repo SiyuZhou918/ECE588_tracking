@@ -7,6 +7,7 @@ For setup, please clone the repository and install the required packages,
 git clone https://github.com/SiyuZhou918/ECE588_tracking.git
 cd ECE588_tracking
 pip install -r requirements.txt
+pip install lap
 python setup.py develop
 ```
 
