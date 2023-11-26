@@ -7,6 +7,10 @@
 
 *.pth
 input_frames/*
+<<<<<<< HEAD
+output_vids/*
+=======
 
 
 
+>>>>>>> fcfa4a00ffb96dfddc7c58cc104026a82387d77d
