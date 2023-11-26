@@ -18,7 +18,7 @@ class Evaluator(object):
         self.reset_accumulator()
 
     def load_annotations(self):
-        assert self.data_type == 'mot'
+        assert self.data_type == 'MOT17'
 
         gt_filename = os.path.join(self.data_root, self.seq_name, 'gt', 'gt.txt')
         self.gt_frame_dict = read_results(gt_filename, self.data_type, is_gt=True)

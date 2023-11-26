@@ -8,12 +8,13 @@ import torch.distributed as dist
 from yolox.exp import Exp as MyExp
 from yolox.data import get_yolox_datadir
 
+
 class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
         self.num_classes = 1
         self.depth = 0.33
-        self.width = 0.25
+        self.width = 0.375
         self.scale = (0.5, 1.5)
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.train_ann = "train_half.json"
@@ -30,24 +31,6 @@ class Exp(MyExp):
         self.basic_lr_per_img = 0.001 / 64.0
         self.warmup_epochs = 1
 
-    def get_model(self, sublinear=False):
-        def init_yolo(M):
-            for m in M.modules():
-                if isinstance(m, nn.BatchNorm2d):
-                    m.eps = 1e-3
-                    m.momentum = 0.03
-        if "model" not in self.__dict__:
-            from yolox.models import YOLOX, YOLOPAFPN, YOLOXHead
-            in_channels = [256, 512, 1024]
-            # NANO model use depthwise = True, which is main difference.
-            backbone = YOLOPAFPN(self.depth, self.width, in_channels=in_channels, depthwise=True)
-            head = YOLOXHead(self.num_classes, self.width, in_channels=in_channels, depthwise=True)
-            self.model = YOLOX(backbone, head)
-
-        self.model.apply(init_yolo)
-        self.model.head.initialize_biases(1e-2)
-        return self.model
-
     def get_data_loader(self, batch_size, is_distributed, no_aug=False):
         from yolox.data import (
             MOTDataset,
@@ -61,7 +44,7 @@ class Exp(MyExp):
         dataset = MOTDataset(
             data_dir=os.path.join(get_yolox_datadir(), "MOT17"),
             json_file=self.train_ann,
-            name='train',
+            name='',
             img_size=self.input_size,
             preproc=TrainTransform(
                 rgb_means=(0.485, 0.456, 0.406),
@@ -155,3 +138,5 @@ class Exp(MyExp):
             testdev=testdev,
         )
         return evaluator
+
+
